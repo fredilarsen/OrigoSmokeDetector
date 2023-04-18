@@ -22,7 +22,7 @@ It needs a 433 MHz receiver like the cheap SRX882 (search on eBay).
 
 It is tested in two contexts:
 
-1. On an ESP8266 that connects to the MQTT broker directly via WiFi
+1. On an ESP8266 with a SRX882, using a direct connection to a MQTT broker via WiFi
 
 2. On an Arduino Nano with a SRX882, using the ModuleInterface repo for wired connectivity to other systems
 
