@@ -21,8 +21,10 @@ The sketch should run on any device that can be programmed from the Arduino sket
 It needs a 433 MHz receiver like the cheap SRX882 (search on eBay).
 
 It is tested in two contexts:
-#. On an ESP8266 that connects to the MQTT broker directly via WiFi.
-#. On an Arduino Nano with a SRX882, using the ModuleInterface repo for connectivity to other systems
+
+1. On an ESP8266 that connects to the MQTT broker directly via WiFi.
+
+2. On an Arduino Nano with a SRX882, using the ModuleInterface repo for connectivity to other systems
 
 ## Notifications
 Notifications will be published to the MQTT topic origo-smokedetector/<numeric device ID>.
