@@ -24,7 +24,7 @@ It is tested in two contexts:
 
 1. On an ESP8266 with a SRX882, using a direct connection to a MQTT broker via WiFi
 
-2. On an Arduino Nano with a SRX882, using the ModuleInterface repo for wired connectivity to other systems
+2. On an Arduino Nano with a SRX882, using the ModuleInterface repo for monitoring and wired connectivity to other systems
 
 ## Notifications
 Notifications will be published to the MQTT topic origo-smokedetector/<numeric device ID>.
