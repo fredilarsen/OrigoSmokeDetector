@@ -28,3 +28,5 @@ It is tested in two contexts:
 
 ## Notifications
 Notifications will be published to the MQTT topic origo-smokedetector/<numeric device ID>.
+  
+Systems like Home Assistant can pick up the MQTT notifications and trigger automations like flashing lights or voice information about which detector has triggered, plus notifications to mobile devices.
