@@ -1,6 +1,8 @@
 # origo-smokedetector
 A hub/gateway for Housegard Origo smoke detectors
 
+*NOTE: Contents will be available soon -- it has been tested but missing some polish*
+
 ## Introduction
 The Housegard Origo smoke detectors are interconnected using 433MHz radio communication. If one of them starts an alarm, all the others will sound as well.
 These smoke detectors are interconnected but do not have an app or any connectivity to other systems.
