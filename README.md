@@ -38,5 +38,5 @@ The ModuleInterface Master will pick up alarm events and will forward them to ot
 
 ## Dependencies
 * The library itself does not depend on any other repositories. This means you can easily use it to create gateways to other protocols than the ones that are available here.
-* The MQTT gateway example depends on the [ReconnectingMqttClient](https://github.com/fredilarsen/ReconnectingMqttClient) repository and the [PJON](https://github.com/gioblu/PJON) repository.
+* The MQTT gateway depends on the [ReconnectingMqttClient](https://github.com/fredilarsen/ReconnectingMqttClient) repository and the [PJON](https://github.com/gioblu/PJON) repository.
 * The ModuleInterface gateway depends on the [ModuleInterface](https://github.com/fredilarsen/ModuleInterface) repository and the [PJON](https://github.com/gioblu/PJON) repository.
