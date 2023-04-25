@@ -30,14 +30,14 @@ It is tested in two contexts:
 2. On an Arduino Nano with a SRX882, communicating on a single-wire bus using no extra hardware. This is based on the ModuleInterface repo that is utilizing PJON on the SWBB strategy.
 
 ### MQTT gateway
-This gateway sketch can be found in examples/OrigoMqtt, and has been tested on a ESP8266. It is probably able to run on most other WiFi capable Arduino compatible boards as well.
+This gateway sketch can be found in [examples/OrigoMqtt](examples/OrigoMqtt), and has been tested on a ESP8266. It is probably able to run on most other WiFi capable Arduino compatible boards as well.
 
 When an alarm is detected, the gateway will publish a message to the MQTT topic origo/<numeric device ID> with a payload of the current millisecond from the ESP, so that a change can be detected every time. This is a quick and dirty alternative to publishing the current epoch time as the ModuleInterface gateway does (because it is time synchronized).
   
 Systems like Home Assistant can pick up the MQTT notifications and trigger automations like flashing lights or voice information about which detector has triggered, plus notifications to mobile devices. The imagination is the limit.
 
 ### ModuleInterface gateway
-This gateway sketch can be found in examples/OrigoModuleInterface and has been tested on an Arduino Nano. It is meant to be part of a ModuleInterface wired bus network (daisy-chained/star/any topology) using only a digital Arduino pin (no communication shields required on the device itself).
+This gateway sketch can be found in [examples/OrigoModuleInterface](examples/OrigoModuleInterface) and has been tested on an Arduino Nano. It is meant to be part of a ModuleInterface wired bus network (daisy-chained/star/any topology) using only a digital Arduino pin (no communication shields required on the device itself).
 The ModuleInterface Master will pick up alarm events and will forward them to other modules that are listening, plus to its own web pages+database and potentially also to a MQTT broker.
 
 ## Dependencies
