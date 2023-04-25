@@ -1,5 +1,5 @@
 # OrigoSmokeDetector
-A header-only C++ library, plus gateways for Housegard Origo smoke detectors
+A header-only C++ library, plus gateways, for Housegard Origo smoke detectors
 
 ## Introduction
 The Housegard Origo smoke detectors are interconnected using 433MHz radio communication. If one of them starts an alarm, all the others will sound as well.
