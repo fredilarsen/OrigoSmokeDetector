@@ -14,6 +14,10 @@ It contains a few gateways for different protocols, most notably MQTT, but can a
 ## How
 The gateway will pick up the radio transmissions from the smoke detectors, extract the device ID, and send a notification to other systems.
 
+The signals were logged with a Cyprus Datalogger board connected to a SRX882 433MHz receiver, using PulseView. Having found the pulse widths and sequence lengths, this library could be written.
+
+The examples can do a SCAN to identify your detectors' bit sequences and detector IDs and print them to the Arduino serial monitor. You should then type these bit sequences into the UserValues.h file before flashing your device with the example. Uncomment the #define DEBUG_PRINT and DEBUG_PRINT_SIGNAL in UserValues.h to enable scan and printout. Simply push the test button on a smoke detector to send the signal to be detected. Press it just long enough for it to sound but not trigger all the other interconnected detectors if you have more than one.
+
 ## Hardware
 The sketch should run on any device that can be programmed from the Arduino sketches in this repo.
 
