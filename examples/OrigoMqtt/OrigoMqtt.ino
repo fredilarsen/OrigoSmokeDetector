@@ -46,7 +46,7 @@ void setup_wifi() {
 #endif	
   }
 #ifdef DEBUG_PRINT  
-  Serial.printf("\nNow listening at IP %s\n", WiFi.localIP().toString().c_str());
+  Serial.printf("\nDHCP assigned IP is %s\n", WiFi.localIP().toString().c_str());
 #endif 
 }
 

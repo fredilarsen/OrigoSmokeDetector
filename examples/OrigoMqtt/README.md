@@ -4,6 +4,8 @@ This is the MQTT gateway to be run on a ESP8266 or other WiFi-enabled device.
 
 Connect the DATA pin of the radio to pin D5 of the device (or change to another pin in UserValues.h).
 
+## Performing a SCAN
+
 Define DEBUG_PRINT and DEBUG_PRINT_SIGNAL in UserValues.h to have the device print detected signals to Serial.
 
 Result from a SCAN is shown below.
@@ -51,3 +53,14 @@ Although the Origo smoke detectors need one device to be master, this is only fo
 The gateway recognizes the sequences and extract the detector id. So why have the HIGHBITS and LOWBITS programmed into the gateway at all?
 - For better filtering of noise and unknown signals, avoiding false alarms
 - To avoid picking up alarms from your neighbor's identical smoke detectors with another bit sequence
+
+## Antenna
+
+Using the standard short cobber coil antenna of the SRX882 should work in most homes.
+Test with the smoke detector that is placed farthest away or behind the thickest walls. If the alarm is not picked up, you need to improve the antenna.
+Adding a bigger ground plane can improve the reception. If you do have space for it, adding a 17.3 cm straight wire antenna can be efficient. Or even two 17.3 cm wires in opposite directions -- the SRX882 has holes for two antennas. Single-stranded wires are best, and it is said that enameled copper wires are better than plastic insulated wires, though I have no tests confirming this. I use plastic insulated wires and have great coverage, also from a separate garage.
+Further antenna recommendations are welcome, please contribute.
+
+
+TODO: Add Fritzing diagram and picture
+TODO: Add time sync and use UTC instead of millis
