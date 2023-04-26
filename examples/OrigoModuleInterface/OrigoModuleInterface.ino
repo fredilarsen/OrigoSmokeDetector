@@ -29,13 +29,15 @@
 
 const uint16_t RADIO_LISTEN_TIME = 110; // ms, more than twice the signal length, enough to ensure picking up a signal
 
-uint8_t detector_id = 0; // Set to non-zero when an alarm was received by the last listening session
+uint8_t detector_id = 0;    // Set to non-zero when an alarm was received by the last listening
+uint32_t detector_time = 0; // The time of the last alarm received, in ms. Set to 0 after some seconds.
 
 OrigoSmokeDetectorListener listener(PIN_RADIORECEIVER, SEQUENCE_HIGHBITS, SEQUENCE_LOWBITS, RADIO_LISTEN_TIME);
 
 void loop_origo() {  
   uint8_t detector_id = listener.listen();
-  if (detector_id != 0) send_event(detector_id);
+  if (detector_id != 0) { send_event(detector_id); detector_time = millis(); }
+  if ((uint32_t)(millis() - detector_time) > 10000) detector_time = 0;
 }
 
 //***************** PJON+ModuleInterface communication ********************
@@ -79,7 +81,7 @@ void notification_function(NotificationType notification_type, const ModuleInter
 
 //************************* LED *****************************
 
-const uint16_t FAST_BLINK = 200, SLOW_BLINK = 1000;
+const uint16_t FAST_BLINK = 100, SLOW_BLINK = 1000;
 bool led_on = false;
 uint16_t interval = SLOW_BLINK;
 uint32_t changed = 0;
@@ -87,7 +89,7 @@ uint32_t changed = 0;
 void setup_led() { pinMode(LED_BUILTIN, OUTPUT); }	
 
 void loop_led() {
-  interval = detector_id == 0 ? SLOW_BLINK : FAST_BLINK;
+  interval = detector_time == 0 ? SLOW_BLINK : FAST_BLINK;
   if ((uint32_t)(millis() - changed) > interval) {
 	  changed = millis();
 	  led_on = !led_on; // Invert state
