@@ -58,6 +58,12 @@ The gateway recognizes the sequences and extract the detector id. So why have th
 - For better filtering of noise and unknown signals, avoiding false alarms
 - To avoid picking up alarms from your neighbor's identical smoke detectors with another bit sequence
 
+## Onboard LED
+
+The LED will flash slowly to show that the gateway is alive and listening.
+
+When an alarm has been received, the LED will flash very quickly to show this, and the rapid flashing continues until 10 seconds after the last alarm sequence was received.
+
 ## Antenna
 
 Using the standard short cobber coil antenna of the SRX882 should work in most homes.
@@ -66,8 +72,3 @@ Test with the smoke detector that is placed farthest away or behind the thickest
 
 Adding a bigger ground plane can improve the reception. If you do have space for it, adding a 17.3 cm straight wire antenna can be efficient. Or even two 17.3 cm wires in opposite directions -- the SRX882 has holes for two antennas. Single-stranded wires are best, and it is said that enameled copper wires are better than plastic insulated wires, though I have no tests confirming this. I use plastic insulated wires and have great coverage, also from a separate garage.
 Further antenna recommendations are welcome, please contribute.
-
-
-TODO: Add Fritzing diagram and picture
-
-TODO: Add time sync and use UTC instead of millis
