@@ -21,4 +21,4 @@ const char* WIFI_SSID     = "MyNetworkSSID";
 const char* WIFI_PASSWORD = "MyNetworkPassword";
 
 // Digital input pin where SRX882 is connected
-const uint8_t PIN_RADIORECEIVER  = 4;
+const uint8_t PIN_RADIORECEIVER  = D5;
