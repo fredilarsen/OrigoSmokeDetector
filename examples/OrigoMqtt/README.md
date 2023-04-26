@@ -72,7 +72,3 @@ Test with the smoke detector that is placed farthest away or behind the thickest
 
 Adding a bigger ground plane can improve the reception. If you do have space for it, adding a 17.3 cm straight wire antenna can be efficient. Or even two 17.3 cm wires in opposite directions -- the SRX882 has holes for two antennas. Single-stranded wires are best, and it is said that enameled copper wires are better than plastic insulated wires, though I have no tests confirming this. I use plastic insulated wires and have great coverage, also from a separate garage.
 Further antenna recommendations are welcome, please contribute.
-
-
-
-TODO: Add time sync and use UTC instead of millis when publishing
