@@ -10,6 +10,7 @@ Define DEBUG_PRINT and DEBUG_PRINT_SIGNAL in UserValues.h to have the device pri
 
 Result from a SCAN is shown below.
 This is by having output from the device shown in the Serial Monitor in the Arduino IDE, while pressing the test button on a smoke detector long enough for it to produce one beep.
+
 The detector sends 8 sequences each time. In this case 4 of them have been caught. 
 The reason why all 8 are not caught is because the device is busy publishing to the MQTT broker immediately after it has received one sequence, so it may miss the next repetition.
 
@@ -43,8 +44,11 @@ The reason why all 8 are not caught is because the device is busy publishing to 
     ALARM from ID=106, count = 3
 
 Copy the HIGHBITS and LOWBITS values from the printout to your UserValues.h for the device to recognize your devices.
+
 Flash the device and repeat the test. You should see the "ALARM from ID=" print showing that it recognizes your detector.
-You can then comment out the define of DEBUG_PRINT_SIGNAL but leave DEBUG_PRINT. When you reflash and retest, you should only seel the "ALARM from" printout showing the device ID.
+
+You can then comment out the define of DEBUG_PRINT_SIGNAL but leave DEBUG_PRINT. When you reflash and retest, you should only see the "ALARM from" printout showing the device ID.
+
 At this point you can repeat for all your smoke detectors to get their ID number printed, so you know what number is associated with each device.
 
 A note about the HIGHBITS and LOWBITS: These are determined by the master smoke detector and programmed into the slaves in the pairing phase. If you reset the master, it will make a new bit sequence, and all the other detectors must be reset and re-paired. If the sequence is changed, you will have to do a new SCAN and use the new HIGHBITS and LOWBITS.
@@ -57,10 +61,13 @@ The gateway recognizes the sequences and extract the detector id. So why have th
 ## Antenna
 
 Using the standard short cobber coil antenna of the SRX882 should work in most homes.
+
 Test with the smoke detector that is placed farthest away or behind the thickest walls. If the alarm is not picked up, you need to improve the antenna.
+
 Adding a bigger ground plane can improve the reception. If you do have space for it, adding a 17.3 cm straight wire antenna can be efficient. Or even two 17.3 cm wires in opposite directions -- the SRX882 has holes for two antennas. Single-stranded wires are best, and it is said that enameled copper wires are better than plastic insulated wires, though I have no tests confirming this. I use plastic insulated wires and have great coverage, also from a separate garage.
 Further antenna recommendations are welcome, please contribute.
 
 
 TODO: Add Fritzing diagram and picture
+
 TODO: Add time sync and use UTC instead of millis
