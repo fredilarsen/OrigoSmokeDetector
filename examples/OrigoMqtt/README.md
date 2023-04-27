@@ -1,10 +1,14 @@
 # OrigoMqtt example
 
-This is the MQTT gateway to be run on a ESP8266 or other WiFi-enabled device.
+This is a MQTT gateway to be run on a ESP8266 or other WiFi-enabled device.
 
 Connect the DATA pin of the radio to pin D5 of the device (or change to another pin in UserValues.h).
 
-## Performing a SCAN
+The device used for testing is the Wemos D1 mini.
+
+![A Wemos D1 mini ESP8166 board](images/Wemos_D1_mini.PNG)
+
+## Performing a SCAN to recognize your smoke detectors
 
 Define DEBUG_PRINT and DEBUG_PRINT_SIGNAL in UserValues.h to have the device print detected signals to Serial.
 
@@ -15,7 +19,7 @@ The detector sends 8 sequences each time. In this case 4 of them have been caugh
 The reason why all 8 are not caught is because the device is busy publishing to the MQTT broker immediately after it has received one sequence, so it may miss the next repetition.
 
     .......
-    Now listening at IP 10.0.0.234
+    DHCP assigned IP is 10.0.0.234
     
     Sequence: 010101100110010110100110100101010101010101011010000
     Widths: 473 1236 468 1236 469 1244 1216 484 460 1249 1210 489 455 1249 460 1253 1210 494 1204 494 450 1258 1205 498 1200 503 441 1262 445 1258 450 1257 450 1253 455 1252 455 1252 455 1271 460 1237 459 1247 1209 483 1209 469 449 451 449 
@@ -49,14 +53,24 @@ Flash the device and repeat the test. You should see the "ALARM from ID=" print 
 
 You can then comment out the define of DEBUG_PRINT_SIGNAL but leave DEBUG_PRINT. When you reflash and retest, you should only see the "ALARM from" printout showing the device ID.
 
-At this point you can repeat for all your smoke detectors to get their ID number printed, so you know what number is associated with each device.
+At this point you can repeat for all your smoke detectors to get their ID number printed, so you know what number is associated with each device. Or you could simply inspect the alarms being reported in your MQTT broker instead of looking in the serial monitor.
 
 A note about the HIGHBITS and LOWBITS: These are determined by the master smoke detector and programmed into the slaves in the pairing phase. If you reset the master, it will make a new bit sequence, and all the other detectors must be reset and re-paired. If the sequence is changed, you will have to do a new SCAN and use the new HIGHBITS and LOWBITS.
-Although the Origo smoke detectors need one device to be master, this is only for the pairing, to have the bits sequences and device ids assigned and distributed. When an alarm goes off, the interconnection is not depending on the master being available.
+Although the Origo smoke detectors need one device to be master, this is only for the pairing, to have the bit sequence and device ids assigned and distributed. When an alarm goes off, the interconnection is not depending on the master being available.
 
-The gateway recognizes the sequences and extract the detector id. So why have the HIGHBITS and LOWBITS programmed into the gateway at all?
+The gateway recognizes the sequences and extracts the detector id. So why have the HIGHBITS and LOWBITS programmed into the gateway at all?
 - For better filtering of noise and unknown signals, avoiding false alarms
 - To avoid picking up alarms from your neighbor's identical smoke detectors with another bit sequence
+
+## MQTT topics
+
+Alarms will be published to the topic origo/alarm/<smokedetector_id>, where smokedetector_id is in the range 1-255 and the payload will be the current epoch time in seconds, like 1682546046. Using Epoch time is the universal way to exchange timestamps without problems.
+
+The gateway will also publish:
+* Startup time to origo/startup, with epoch time as payload
+* A heartbeat to origo/heartbeat every 10 seconds, with epoch time as payload
+
+You can specify the NTP server used to do the time synchronization, in UserValues.h. For example, you can use your own router if the device is put on a closed network. If an NTP server is not available, the payload will be the number of seconds since startup of the device.
 
 ## Onboard LED
 
@@ -72,3 +86,45 @@ Test with the smoke detector that is placed farthest away or behind the thickest
 
 Adding a bigger ground plane can improve the reception. If you do have space for it, adding a 17.3 cm straight wire antenna can be efficient. Or even two 17.3 cm wires in opposite directions -- the SRX882 has holes for two antennas. Single-stranded wires are best, and it is said that enameled copper wires are better than plastic insulated wires, though I have no tests confirming this. I use plastic insulated wires and have great coverage, also from a separate garage.
 Further antenna recommendations are welcome, please contribute.
+
+## Home Assistant configuration for picking up alarms
+
+If you use Home Assistant for picking up the alarms, this is an example of a configuration snippet that could do the job. Put it in your automations.yaml and modify.
+
+    - alias: Smoke alarm
+      trigger:
+        platform: mqtt
+        topic: origo/alarm/+
+      condition:
+        condition: template
+        value_template:
+          "{{ (as_timestamp(now())|int > trigger.payload|int - 120) and
+          as_timestamp(now())|int < trigger.payload|int + 120 }}"
+      action:
+        - service: notify.pushbullet
+          data:
+            title: Smoke alarm
+            target: device/Galaxy S21 Ultra
+            message: >
+              {% set mapper = {
+              '85'  : 'Main bedroom',
+              '102' : 'Hallway first floor',
+              '105' : 'Bedroom first floor',
+              '106' : 'Office',
+              '149' : 'Washing room',
+              '150' : 'Sewing room',
+              '153' : 'Kitchen/livingroom',
+              '165' : 'Workshop',
+              '166' : 'Technical room', 
+              } %}
+              {% set id = trigger.topic.split("/")[2] %}
+              Smoke detected in {{ mapper[id] if id in mapper else '(unknown)' }}
+
+It is mapping the smoke detector IDs to room names, and then sending a notification to a phone, in this case using PushBullet. 
+The condition is not strictly required, and can be removed. It is simply making doing a time filtering of the messages to make sure only valid and fresh messages can trigger the notifications, assuming the ESP and the HA server both being time synchronized within a big margin.
+
+A phone notification:
+
+![Phone notification example](images/Phone_notification.PNG)
+
+Add more actions as needed.

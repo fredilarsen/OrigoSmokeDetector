@@ -12,9 +12,9 @@ const uint32_t SEQUENCE_HIGHBITS = 0x5AAA,
                SEQUENCE_LOWBITS  = 0xA965A600;
 
 // MQTT broker information (IP address, port number and top topic)
-uint8_t BROKER_IP[] = { 127,0,0,1 };
-uint16_t BROKER_PORT = 1883;
-const char *ROOT_TOPIC = "origo";
+uint8_t     BROKER_IP[] = { 10,0,0,1 };
+uint16_t    BROKER_PORT = 1883;
+const char *ROOT_TOPIC  = "origo";
                
 // WiFi network to connect to
 const char* WIFI_SSID     = "MyNetworkSSID";
@@ -22,3 +22,6 @@ const char* WIFI_PASSWORD = "MyNetworkPassword";
 
 // Digital input pin where SRX882 is connected
 const uint8_t PIN_RADIORECEIVER  = D5;
+
+// Timesync server address
+const char *TIMESYNC_SERVER = "time.cloudflare.com";

@@ -5,22 +5,56 @@
 
 #include "UserValues.h"
 #include <ESP8266WiFi.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
 #include <OrigoSmokeDetector.h>
 #include <PJONEthernetTCP.h>
 #include <ReconnectingMqttClient.h>
+
+
+//************************** Time sync ******************************
+
+WiFiUDP ntp_udp;
+NTPClient time_client(ntp_udp, TIMESYNC_SERVER, 0, 600000);
+
+void setup_timesync() { 
+  time_client.begin();
+  time_client.forceUpdate();
+}
 
 
 //************************* MQTT *****************************
 
 ReconnectingMqttClient mqtt(BROKER_IP, BROKER_PORT, ROOT_TOPIC);
 
-void publish(uint8_t detector_id) {
-    String topic = String(ROOT_TOPIC) + "/" + String(detector_id),
-           payload = String(millis());
+void publish_alarm(uint8_t detector_id) {
+    String topic = String(ROOT_TOPIC) + "/alarm/" + String(detector_id),
+           payload = String(time_client.getEpochTime());
     mqtt.publish(topic.c_str(), (uint8_t*) payload.c_str(), payload.length(), false, 1);  
 }
 
-void setup_mqtt() { publish(0); } // Send a hello signal as unused detector id 0
+void publish_heartbeat() {
+    String topic = String(ROOT_TOPIC) + "/heartbeat", payload = String(time_client.getEpochTime());
+    mqtt.publish(topic.c_str(), (uint8_t*) payload.c_str(), payload.length(), false, 1);  
+}
+
+void publish_startup() {
+    String topic = String(ROOT_TOPIC) + "/startup", payload = String(time_client.getEpochTime());
+    mqtt.publish(topic.c_str(), (uint8_t*) payload.c_str(), payload.length(), false, 1);  
+}
+
+void setup_mqtt() { publish_startup(); }
+
+void loop_mqtt() {
+  mqtt.update();
+  // Send heartbeat
+  static uint32_t last_heartbeat = 0;
+  if ((uint32_t)(millis() - last_heartbeat) >= 10000) {
+    last_heartbeat = millis();
+    publish_heartbeat();
+  }
+}
+
 
 //***************** Logging data from 433MHz radio receiver ********************
 
@@ -33,8 +67,8 @@ OrigoSmokeDetectorListener listener(PIN_RADIORECEIVER, SEQUENCE_HIGHBITS, SEQUEN
 
 void loop_origo() {  
   detector_id = listener.listen();
-  if (detector_id != 0) { publish(detector_id); detector_time = millis(); }
-  if ((uint32_t)(millis() - detector_time) > 10000) { detector_time = 0; }
+  if (detector_id != 0) { publish_alarm(detector_id); detector_time = millis(); }
+  if ((uint32_t)(millis() - detector_time) > 10000) detector_time = 0;
 }
 
 
@@ -82,13 +116,15 @@ void setup() {
   Serial.println("OrigoMqtt starting");
 #endif
   setup_wifi();
+  setup_timesync();
   setup_led();
   listener.setup();
   setup_mqtt();
 }
 
 void loop() {
+  time_client.update();
   loop_origo();
-  mqtt.update();
+  loop_mqtt();
   loop_led();
 }
