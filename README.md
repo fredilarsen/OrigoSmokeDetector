@@ -39,7 +39,7 @@ The sketch should run on any device that can be programmed from the Arduino sket
 
 It needs a 433 MHz receiver like the cheap SRX882 (search on eBay). Avoid the even cheaper green ones.
 
-![The SRX882 433MHz radio receiver](images/SRX882.png)
+![The SRX882 433MHz radio receiver](images/SRX882.PNG)
 
 It is tested in two contexts:
 
