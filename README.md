@@ -2,7 +2,7 @@
 
 A header-only C++ library, plus gateways, for Housegard Origo smoke detectors
 
-![The Housegard Origo smoke detectors](images/Origo_detectors.png)
+![The Housegard Origo smoke detectors](images/Origo_detectors.PNG)
 
 ## Introduction
 
