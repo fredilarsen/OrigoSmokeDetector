@@ -33,7 +33,7 @@ The examples can do a SCAN to identify your detectors' bit sequences and detecto
 
 ## Hardware
 
-Total hardware cost can be as low as 3-4€ in total for both a receiver and a microcontroller board.
+Total hardware cost can be as low as 3-5€ in total for both a receiver and a microcontroller board.
 
 The sketch should run on any device that can be programmed from the Arduino sketches in this repo.
 
