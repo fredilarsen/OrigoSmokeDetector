@@ -51,7 +51,7 @@ It is tested in two contexts:
 
 This gateway sketch can be found in [examples/OrigoMqtt](examples/OrigoMqtt), and has been tested on a ESP8266. It is probably able to run on most other WiFi capable Arduino compatible boards as well.
 
-When an alarm is detected, the gateway will publish a message to the MQTT topic origo/alarm/(numeric device ID>) with the epoch time as payload. Using the timestamp of the alarm makes it easy to determine when each smoke detector was last triggered when looking at the topics in the MQTT broker.
+When an alarm is detected, the gateway will publish a message to the MQTT topic origo/alarm/(numeric device ID) with the epoch time as payload. Using the timestamp of the alarm makes it easy to determine when each smoke detector was last triggered when looking at the topics in the MQTT broker.
   
 Systems like Home Assistant can pick up the MQTT notifications and trigger automations like flashing lights or voice information about which detector has triggered, plus notifications to mobile devices. The imagination is the limit. See the gateway example README for a Home Assistant configuration example.
 
