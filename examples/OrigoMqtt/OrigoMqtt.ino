@@ -8,7 +8,6 @@
 #include <NTPClient.h>
 #include <WiFiUdp.h>
 #include <OrigoSmokeDetector.h>
-#include <PJONEthernetTCP.h>
 #include <ReconnectingMqttClient.h>
 
 
