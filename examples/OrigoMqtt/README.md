@@ -87,6 +87,8 @@ Test with the smoke detector that is placed farthest away or behind the thickest
 Adding a bigger ground plane can improve the reception. If you do have space for it, adding a 17.3 cm straight wire antenna can be efficient. Or even two 17.3 cm wires in opposite directions -- the SRX882 has holes for two antennas. Single-stranded wires are best, and it is said that enameled copper wires are better than plastic insulated wires, though I have no tests confirming this. I use plastic insulated wires and have great coverage, also from a separate garage.
 Further antenna recommendations are welcome, please contribute.
 
+One note on the newer variant SRX882S is that it seems you have to connect CS for it to activate. This is not needed on the SRX882.
+
 ## Home Assistant configuration for picking up alarms
 
 If you use Home Assistant for picking up the alarms, this is an example of a configuration snippet that could do the job. Put it in your automations.yaml and modify.
