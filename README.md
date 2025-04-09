@@ -13,7 +13,7 @@ These detectors have a more solid interconnection than many others because they 
 
 This repo implements a library for creating a gateway for these smoke detectors, so that other systems can be notified if an alarm goes off, and also see which detector was triggered.
 
-It contains a few gateways for different protocols, most notably MQTT, but can also be used as a simple libary so you can make yur own program to interface with other systems.
+It contains a few gateways for different protocols, most notably MQTT, but can also be used as a simple library so you can make yur own program to interface with other systems.
 
 ## How
 
