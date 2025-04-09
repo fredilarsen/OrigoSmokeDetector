@@ -15,7 +15,7 @@ This repo implements a library for creating a gateway for these smoke detectors,
 
 It contains a few gateways for different protocols, most notably MQTT, but can also be used as a simple library so you can make yur own program to interface with other systems.
 
-UPDATE: Thanks to @Swiftwork the Origo smoke detector support has now been added to ESPHome.
+UPDATE: Thanks to @Swiftwork for adding the Origo smoke detector support to ESPHome.
 
 ## How
 
